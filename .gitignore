@@ -31,6 +31,7 @@ bin/
 *.class
 
 # Secrets & Credentials
+.env
 .env.*
 !.env.example
 *.pem
