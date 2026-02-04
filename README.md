@@ -14,6 +14,7 @@ The Digital Cookbook
 
 ```bash
 bun install
+bun run docs:agents #install next.js docs for ai agents
 ```
 
 2. Set up the database:
@@ -28,7 +29,7 @@ bun run db:migrate
 bun run dev
 ```
 
-The app will be available at [http://localhost:3000](http://localhost:3000).
+The app will be available at [http://localhost:3000](http://localhost:3000)
 
 ### Available Commands
 
