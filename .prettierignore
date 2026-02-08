@@ -1,0 +1,18 @@
+# Build artifacts
+.next
+dist
+build
+out
+
+# Database migrations (CRITICAL: Do not format these)
+drizzle
+
+# Dependencies
+node_modules
+
+# Environment files
+.env
+.env.*
+
+# System files
+.DS_Store

@@ -35,3 +35,15 @@ bun run db:studio
 **What it does:** Opens a web interface to view and manage `sqlite.db` contents.
 
 ---
+
+## 🔥 YOLO
+
+Quickly test out a new version of `schemea.ts`:
+
+```bash
+bun run db:push
+```
+
+**What it does:** Makes `sqlite.db` match `schema.ts` immediately, skipping the migration steps.
+
+---
