@@ -1,26 +1,46 @@
-<div align="center" style="padding-top: 100px;">
+---
+title: "ChopChop: The Digital Cookbook"
+subtitle: "CS3340/6340 System Design Document"
+author:
+  - Adolfo Duran
+  - Dominic McDevitt
+  - Katie Cerda
+  - Kobie Henson
+  - Shane Misley
+date: "February 10, 2026"
+geometry: margin=1in
+fontsize: 11pt
+linestretch: 1.15
+header-includes:
+  - \\usepackage{booktabs}
+  - \\usepackage{longtable}
+  - \\usepackage{graphicx}
+  - \\usepackage{fancyhdr}
+  - \\pagestyle{fancy}
+  - \\fancyhead[L]{ChopChop System Design}
+  - \\fancyhead[R]{\\thepage}
+  - \\fancyfoot[C]{}
+  - \\renewcommand{\\headrulewidth}{0.4pt}
+  - \\usepackage{xcolor}
+  - \\definecolor{linkblue}{RGB}{0,102,204}
+  - \\hypersetup{colorlinks=true,linkcolor=linkblue,urlcolor=linkblue,citecolor=linkblue}
+  - \\usepackage{titlesec}
+  - \\titleformat{\\section}{\\Large\\bfseries}{\\thesection}{1em}{}
+  - \\titleformat{\\subsection}{\\large\\bfseries}{\\thesubsection}{1em}{}
+  - \\usepackage{setspace}
+  - \\setlength{\\parindent}{0pt}
+  - \\setlength{\\parskip}{0.5em}
+toc: true
+toc-depth: 3
+numbersections: true
+link-citations: true
+---
 
-# ChopChop: The Digital Cookbook
-
-<br>
-<br>
-
-**CS3340/6340**
-
-**10 February, 2026**
-
-<br>
-<br>
-
-Adolfo Duran, Dominic McDevitt, Katie Cerda, Kobie Henson, Shane Misley
-
-</div>
-
-<div style="page-break-after: always;"></div>
+\newpage
 
 ## Table of Contents
 
-- [Background and Overview (pg 3-)](#background-and-overview)
+- [Background and Overview](#background-and-overview)
 - [Requirements Analysis](#requirements-analysis)
 - [Detailed Design](#detailed-design)
 - [Interface Design and Draft Screens](#interface-design-and-draft-screens)
@@ -28,7 +48,7 @@ Adolfo Duran, Dominic McDevitt, Katie Cerda, Kobie Henson, Shane Misley
 - [References](#references)
 - [Notes](#notes)
 
-<div style="page-break-after: always;"></div>
+\newpage
 
 ## Background and Overview
 
@@ -48,9 +68,7 @@ The system uses the Gemini Vision model to interpret visual data. Unlike standar
 
 Designed for the average home cook, the system simplifies meal management by leveraging the ubiquity of modern smartphones and web browsers to ensure access from any device, eliminating the need for specialized software. The integration of a visual LLM removes the barrier of manual data entry; users can simply take a picture of a physical printout or handwritten note, and the system automatically parses it into a digital format. This transformation turns static text into dynamic data, empowering users to effortlessly scale ingredient quantities for any serving size and share their personalized recipe collections with friends and family.
 
----
-
-<div style="page-break-after: always;"></div>
+\newpage
 
 ## Requirements Analysis
 
@@ -64,7 +82,7 @@ Many home chefs will naturally start to keep a recipe collection, i.e saving off
 
 ### Solution
 
-We will build a website that allows users to submit images or pdf documents of a recipe to add it to their recipe collection. Our system will use the Gemini API to convert that image to a json object, which will be parsed by our system to generate various aesthetically pleasing layouts (one optimized for printing, one for mobile, one for desktop screens, etc). Users will be able to tweak the details of a recipe at any time, categorize recipes, share recipes via link, etc. This website will be officially supported on Linux, Windows, and Mac on Chrome, Firefox, and Safari. Other Chromium-based browsers will probably work but won’t be officially tested.
+We will build a website that allows users to submit images or pdf documents of a recipe to add it to their recipe collection. Our system will use the Gemini API to convert that image to a json object, which will be parsed by our system to generate various aesthetically pleasing layouts (one optimized for printing, one for mobile, one for desktop screens, etc). Users will be able to tweak the details of a recipe at any time, categorize recipes, share recipes via link, etc. This website will be officially supported on Linux, Windows, and Mac on Chrome, Firefox, and Safari. Other Chromium-based browsers will probably work but won't be officially tested.
 
 ### Main Functionalities
 
@@ -86,24 +104,22 @@ We will build a website that allows users to submit images or pdf documents of a
 - Use the Gemini API to generate a json object with the recipe details from the uploaded image/pdf.
 - Create an unlisted link to a recipe (and maybe a private link)
 
-### Development tools, languages, platforms
+### Development Tools, Languages, and Platforms
 
 We chose the following tech stack based on current web standards. All of the languages/frameworks below are modern, performant, well-supported. Additionally, the listed operating systems and browsers cover the majority of potential users. Because our app will be a website it will run on an computing device with a browser and internet connection, including (but not limited to) PCs, smartphones, tablets, and smart fridges.
 
-- React (Typescript)
-- Next.js
-- Tailwind CSS
-- Bun
-- Vercel (for hosting)
-- Sqlite database
-- Github
-- Gemini API via Vercel AI SDK
-- Linux, Windows, and macOS
-- Chrome, Firefox, and Safari
+| Category           | Technology                                |
+| ------------------ | ----------------------------------------- |
+| Frontend           | React (TypeScript), Next.js, Tailwind CSS |
+| Runtime            | Bun                                       |
+| Hosting            | Vercel                                    |
+| Database           | SQLite                                    |
+| Version Control    | GitHub                                    |
+| AI Integration     | Gemini API via Vercel AI SDK              |
+| Supported OS       | Linux, Windows, macOS                     |
+| Supported Browsers | Chrome, Firefox, Safari                   |
 
----
-
-<div style="page-break-after: always;"></div>
+\newpage
 
 ## Detailed Design
 
@@ -120,80 +136,83 @@ The system follows a modern web application architecture using Next.js for both 
 - **Frontend (Next.js/React):** Handles user interaction, state management, and rendering of responsive UI.
 - **Backend API (Next.js API Routes):** Manages business logic, authentication, and data validation.
 - **Database (SQLite + Drizzle ORM):** Stores structured data for users, recipes, and ingredients.
-- **Gemini Service Adapter:** specialized module to interact with Google's Gemini Vision API for recipe extraction.
+- **Gemini Service Adapter:** Specialized module to interact with Google's Gemini Vision API for recipe extraction.
 - **Storage Service:** Manages upload and retrieval of raw recipe images and PDFs.
 
 ### 2. Data Design
 
 The database schema is designed to support the core entity relationships required for recipe management.
 
-![Entity Relationship Diagram](https://raw.githubusercontent.com/dommcdev/images/refs/heads/main/chopchop/erd.png)
-
-#### Schema Definitions
 
 **Users Table**
 
-- `id`: UUID (Primary Key)
-- `email`: String (Unique, Indexed)
-- `password_hash`: String (Argon2id)
-- `created_at`: Timestamp
+| Field           | Type                     | Description              |
+| --------------- | ------------------------ | ------------------------ |
+| `id`            | UUID (Primary Key)       | Unique identifier        |
+| `email`         | String (Unique, Indexed) | User email address       |
+| `password_hash` | String                   | Argon2id hashed password |
+| `created_at`    | Timestamp                | Account creation time    |
 
 **Recipes Table**
 
-- `id`: UUID (Primary Key)
-- `user_id`: UUID (Foreign Key to Users)
-- `title`: String
-- `description`: Text
-- `servings`: Integer (Default: 1)
-- `prep_time_min`: Integer
-- `cook_time_min`: Integer
-- `source_image`: Blob/Reference (Path to stored image)
+| Field           | Type               | Description                       |
+| --------------- | ------------------ | --------------------------------- |
+| `id`            | UUID (Primary Key) | Unique identifier                 |
+| `user_id`       | UUID (Foreign Key) | Reference to Users table          |
+| `title`         | String             | Recipe name                       |
+| `description`   | Text               | Recipe description                |
+| `servings`      | Integer            | Default serving size (Default: 1) |
+| `prep_time_min` | Integer            | Preparation time in minutes       |
+| `cook_time_min` | Integer            | Cooking time in minutes           |
+| `source_image`  | Blob/Reference     | Path to stored image              |
 
 **Ingredients Table**
 
-- `id`: Integer (Primary Key, Auto-increment)
-- `recipe_id`: UUID (Foreign Key to Recipes)
-- `name`: String
-- `quantity`: Float
-- `unit`: String
+| Field       | Type                                  | Description                |
+| ----------- | ------------------------------------- | -------------------------- |
+| `id`        | Integer (Primary Key, Auto-increment) | Unique identifier          |
+| `recipe_id` | UUID (Foreign Key)                    | Reference to Recipes table |
+| `name`      | String                                | Ingredient name            |
+| `quantity`  | Float                                 | Amount required            |
+| `unit`      | String                                | Unit of measurement        |
 
 ### 3. User Flows
 
-The application flow is designed to be intuitive, centering around the "Upload -> Process -> Edit" loop.
+The application flow is designed to be intuitive, centering around the "Upload → Process → Edit" loop.
 
 ![User Flow Diagram](https://raw.githubusercontent.com/dommcdev/images/refs/heads/main/chopchop/user_flow.png)
 
 #### Key Flows
 
-1.  **Authentication:** Users must authenticate to access their private library.
-2.  **Ingestion:**
-    - User uploads a file (PDF/Image).
-    - System validates file type and size.
-    - Backend sends file to Gemini Vision API.
-    - Gemini returns structured JSON.
-3.  **Editing:**
-    - User reviews the AI-extracted data in the Recipe Editor.
-    - Corrections are made to ingredients or instructions.
-    - User saves the recipe to their library.
-4.  **Consumption:**
-    - User views recipe in a read-only format optimized for cooking.
-    - User can scale servings, which dynamically adjusts ingredient quantities.
+1. **Authentication:** Users must authenticate to access their private library.
+2. **Ingestion:**
+   - User uploads a file (PDF/Image).
+   - System validates file type and size.
+   - Backend sends file to Gemini Vision API.
+   - Gemini returns structured JSON.
+3. **Editing:**
+   - User reviews the AI-extracted data in the Recipe Editor.
+   - Corrections are made to ingredients or instructions.
+   - User saves the recipe to their library.
+4. **Consumption:**
+   - User views recipe in a read-only format optimized for cooking.
+   - User can scale servings, which dynamically adjusts ingredient quantities.
 
 ### 4. Module Interactions
 
 #### PDF/Image Ingestion Pipeline
 
-1.  **Upload:** Client sends `FormData` containing the file to `/api/upload`.
-2.  **Validation:** Middleware checks file size limits and MIME types.
-3.  **Storage:** File is saved to temporary storage or object storage (S3/Blob).
-4.  **Processing:**
-    - If PDF: Converted to image series.
-    - Image passed to `GeminiAdapter`.
-5.  **Extraction:** `GeminiAdapter` constructs a prompt with the image and sends it to Gemini API.
-6.  **Response:** Gemini returns JSON. System validates JSON against `RecipeSchema`.
-7.  **Return:** Validated JSON is returned to the client for the Editor view.
+1. **Upload:** Client sends `FormData` containing the file to `/api/upload`.
+2. **Validation:** Middleware checks file size limits and MIME types.
+3. **Storage:** File is saved to temporary storage or object storage (S3/Blob).
+4. **Processing:**
+   - If PDF: Converted to image series.
+   - Image passed to `GeminiAdapter`.
+5. **Extraction:** `GeminiAdapter` constructs a prompt with the image and sends it to Gemini API.
+6. **Response:** Gemini returns JSON. System validates JSON against `RecipeSchema`.
+7. **Return:** Validated JSON is returned to the client for the Editor view.
 
----
+\newpage
 
 ## Interface Design and Draft Screens
 
@@ -310,129 +329,170 @@ Changes made here apply to the user account and stored data.
 
 These draft screens define the basic structure and user flow of the ChopChop application. They will be used as a reference when implementing frontend components and backend integrations. Final visual styling will be addressed later in development once core functionality is complete.
 
----
-
-<div style="page-break-after: always;"></div>
+\newpage
 
 ## Plan
 
 We broke our tasks into three general groups: frontend tasks, backend tasks, and documentation tasks. Our Gantt chart places these on a schedule.
 
-### Frontend tasks
+### Frontend Tasks
 
-- **Login page**
-  - Purpose: Provide account creation and sign-in so users can access a private recipe collection.
-  - Scope: Email/password UI, validation, error states, password reset (if in scope), loading states, and redirect behavior.
-  - Deliverables: Login/register forms, session-aware routing, minimal styling consistent with the app.
-- **Home page**
-  - Purpose: Primary “recipe library” landing page after login.
-  - Scope: List recipes (title, time, tags/categories), create/import CTA, recent uploads, empty states, basic navigation.
-  - Deliverables: Responsive recipe grid/list, navigation shell, basic category filters (if ready).
-- **File selector (camera/image picker)**
-  - Purpose: Ingest recipe sources (PDF or image) for AI extraction.
-  - Scope: File upload component, drag/drop, mobile camera capture where supported, file type/size validation, upload progress, re-try, cancel.
-  - Deliverables: Upload UI + wiring to backend ingestion endpoint.
-- **Recipe details editor**
-  - Purpose: Let users review and correct the extracted recipe JSON.
-  - Scope: Editable fields for title/description/servings/time; ingredient rows (name/qty/unit); instruction steps; category assignment; save/versioning behavior; client-side validation.
-  - Deliverables: Full CRUD editor UI bound to recipe schema; “save” + “save and view” flows.
-- **Settings page**
-  - Purpose: User preferences and account management.
-  - Scope: Profile basics, export actions (JSON archive / PDFs), delete account/data (optional), rate-limit notifications (optional), theme (optional).
-  - Deliverables: Settings UI + backend hooks for export and user options.
-- **Recipe viewer**
-  - Purpose: Clean read-only layout optimized for cooking.
-  - Scope: Mobile-first readability, ingredient scaling display, step-by-step view, share-link access mode (unlisted), print/export CTA.
-  - Deliverables: Viewer route that renders from stored recipe data consistently.
-- **Print to PDF layout**
-  - Purpose: A print-friendly, stable layout (and/or PDF export) for single recipe or collection.
-  - Scope: Dedicated print stylesheet/layout, pagination considerations, consistent font sizing, ingredient/instructions formatting; “Print” and “Export PDF” UX.
-  - Deliverables: Print-ready view + tested output.
-- **Search**
-  - Purpose: Find recipes quickly.
-  - Scope: Search by title, ingredient text, category; debounce; highlight matches; “no results” states; optionally full-text search support.
-  - Deliverables: Search bar + results view; backend query endpoints or client filtering depending on DB approach.
+**Login Page**
 
-### Backend tasks
+- **Purpose:** Provide account creation and sign-in so users can access a private recipe collection.
+- **Scope:** Email/password UI, validation, error states, password reset (if in scope), loading states, and redirect behavior.
+- **Deliverables:** Login/register forms, session-aware routing, minimal styling consistent with the app.
 
-- **PDF to image converter**
-  - Purpose: Convert uploaded PDFs into images for Gemini Vision ingestion (or extract per-page).
-  - Scope: Server-side conversion pipeline, page limits, resolution, compression, storage strategy (temp vs persistent).
-  - Deliverables: Endpoint/service that takes PDF → images (array), returns references for Gemini processing.
-- **Gemini API adapter**
-  - Purpose: Standardize calling Gemini and transforming outputs into your internal recipe JSON schema.
-  - Scope: Prompting template, response parsing, schema validation, error handling, retries, cost controls.
-  - Deliverables: A single adapter module that returns a validated recipe object (or structured errors).
-- **Define SQL schemas**
-  - Purpose: Persist users, recipes, ingredients, etc. consistent with the design doc tables.
-  - Scope: Migrations, constraints, indexing, foreign keys; consider categories, share links, and original upload references.
-  - Deliverables: SQL migration scripts + a typed access layer.
-- **DB to JSON converter (export)**
-  - Purpose: Allow exporting all user data to a portable archive (explicit requirement).
-  - Scope: Serialize recipes + ingredients + categories + metadata; optionally include source images; ensure stable schema for re-import.
-  - Deliverables: Export endpoint that returns a downloadable JSON (and optional zipped assets).
-- **Auth (including rate-limiting)**
-  - Purpose: Secure accounts and protect costly endpoints (Gemini calls, uploads).
-  - Scope: Session/JWT strategy, password hashing, middleware guards, per-user request throttling, abuse prevention.
-  - Deliverables: Auth middleware + rate limiter on ingestion and AI endpoints, plus basic audit logs (optional).
-- **S3 storage bucket (low-priority if doing images)**
-  - Purpose: Persist uploaded images/PDFs (or page images) outside the app server.
-  - Scope: Bucket config, signed upload URLs, lifecycle rules, access controls.
-  - Deliverables: Storage integration, plus DB references to stored assets.
-- **Deploy to Vercel (optional)**
-  - Purpose: Ship a working demo/production instance.
-  - Scope: Environment variables, build settings, DB hosting choice, secrets management, staging vs prod.
-  - Deliverables: Vercel project configured + deployment pipeline.
+**Home Page**
 
-### Documentation
+- **Purpose:** Primary "recipe library" landing page after login.
+- **Scope:** List recipes (title, time, tags/categories), create/import CTA, recent uploads, empty states, basic navigation.
+- **Deliverables:** Responsive recipe grid/list, navigation shell, basic category filters (if ready).
 
-- **Requirements doc**
-  - Purpose: Finalize user-facing and system requirements (functional + nonfunctional).
-  - Deliverables: Clean requirements section with acceptance criteria.
-- **Design doc**
-  - Purpose: Architecture, module interactions, data flow, database schema, and UI mock usage examples.
-  - Deliverables: Completed “Detailed Design” section, diagrams, inputs/outputs per module.
-- **Programmer’s manual**
-  - Purpose: How to run, test, deploy, and extend the codebase.
-  - Deliverables: Setup steps, env vars, scripts, folder structure, API contracts.
-- **User manual**
-  - Purpose: How an end user uses ChopChop.
-  - Deliverables: Upload flow, edit flow, search, share, export, print instructions, screenshots.
-- **Integration task**
-  - Purpose: Connect end-to-end: upload → convert → Gemini → validate → store → edit/view/print/export.
-  - Deliverables: Working happy-path plus error-path handling; smoke tests.
-- **Final testing**
-  - Purpose: Verify correctness, usability, and edge cases.
-  - Scope: Unit tests (adapter/schema), integration tests (ingestion), cross-browser checks (Chrome/Firefox/Safari), mobile responsiveness, print output checks.
-  - Deliverables: Test plan + results summary.
-- **Final presentation**
-  - Purpose: Demo + explain architecture/decisions and show outcomes.
-  - Deliverables: Slide deck + demo script + “what we built vs plan” summary.
+**File Selector (Camera/Image Picker)**
+
+- **Purpose:** Ingest recipe sources (PDF or image) for AI extraction.
+- **Scope:** File upload component, drag/drop, mobile camera capture where supported, file type/size validation, upload progress, re-try, cancel.
+- **Deliverables:** Upload UI + wiring to backend ingestion endpoint.
+
+**Recipe Details Editor**
+
+- **Purpose:** Let users review and correct the extracted recipe JSON.
+- **Scope:** Editable fields for title/description/servings/time; ingredient rows (name/qty/unit); instruction steps; category assignment; save/versioning behavior; client-side validation.
+- **Deliverables:** Full CRUD editor UI bound to recipe schema; "save" + "save and view" flows.
+
+**Settings Page**
+
+- **Purpose:** User preferences and account management.
+- **Scope:** Profile basics, export actions (JSON archive / PDFs), delete account/data (optional), rate-limit notifications (optional), theme (optional).
+- **Deliverables:** Settings UI + backend hooks for export and user options.
+
+**Recipe Viewer**
+
+- **Purpose:** Clean read-only layout optimized for cooking.
+- **Scope:** Mobile-first readability, ingredient scaling display, step-by-step view, share-link access mode (unlisted), print/export CTA.
+- **Deliverables:** Viewer route that renders from stored recipe data consistently.
+
+**Print to PDF Layout**
+
+- **Purpose:** A print-friendly, stable layout (and/or PDF export) for single recipe or collection.
+- **Scope:** Dedicated print stylesheet/layout, pagination considerations, consistent font sizing, ingredient/instructions formatting; "Print" and "Export PDF" UX.
+- **Deliverables:** Print-ready view + tested output.
+
+**Search**
+
+- **Purpose:** Find recipes quickly.
+- **Scope:** Search by title, ingredient text, category; debounce; highlight matches; "no results" states; optionally full-text search support.
+- **Deliverables:** Search bar + results view; backend query endpoints or client filtering depending on DB approach.
+
+### Backend Tasks
+
+**PDF to Image Converter**
+
+- **Purpose:** Convert uploaded PDFs into images for Gemini Vision ingestion (or extract per-page).
+- **Scope:** Server-side conversion pipeline, page limits, resolution, compression, storage strategy (temp vs persistent).
+- **Deliverables:** Endpoint/service that takes PDF → images (array), returns references for Gemini processing.
+
+**Gemini API Adapter**
+
+- **Purpose:** Standardize calling Gemini and transforming outputs into your internal recipe JSON schema.
+- **Scope:** Prompting template, response parsing, schema validation, error handling, retries, cost controls.
+- **Deliverables:** A single adapter module that returns a validated recipe object (or structured errors).
+
+**Define SQL Schemas**
+
+- **Purpose:** Persist users, recipes, ingredients, etc. consistent with the design doc tables.
+- **Scope:** Migrations, constraints, indexing, foreign keys; consider categories, share links, and original upload references.
+- **Deliverables:** SQL migration scripts + a typed access layer.
+
+**DB to JSON Converter (Export)**
+
+- **Purpose:** Allow exporting all user data to a portable archive (explicit requirement).
+- **Scope:** Serialize recipes + ingredients + categories + metadata; optionally include source images; ensure stable schema for re-import.
+- **Deliverables:** Export endpoint that returns a downloadable JSON (and optional zipped assets).
+
+**Auth (Including Rate-Limiting)**
+
+- **Purpose:** Secure accounts and protect costly endpoints (Gemini calls, uploads).
+- **Scope:** Session/JWT strategy, password hashing, middleware guards, per-user request throttling, abuse prevention.
+- **Deliverables:** Auth middleware + rate limiter on ingestion and AI endpoints, plus basic audit logs (optional).
+
+**S3 Storage Bucket (Low-Priority)**
+
+- **Purpose:** Persist uploaded images/PDFs (or page images) outside the app server.
+- **Scope:** Bucket config, signed upload URLs, lifecycle rules, access controls.
+- **Deliverables:** Storage integration, plus DB references to stored assets.
+
+**Deploy to Vercel (Optional)**
+
+- **Purpose:** Ship a working demo/production instance.
+- **Scope:** Environment variables, build settings, DB hosting choice, secrets management, staging vs prod.
+- **Deliverables:** Vercel project configured + deployment pipeline.
+
+### Documentation Tasks
+
+**Requirements Doc**
+
+- **Purpose:** Finalize user-facing and system requirements (functional + nonfunctional).
+- **Deliverables:** Clean requirements section with acceptance criteria.
+
+**Design Doc**
+
+- **Purpose:** Architecture, module interactions, data flow, database schema, and UI mock usage examples.
+- **Deliverables:** Completed "Detailed Design" section, diagrams, inputs/outputs per module.
+
+**Programmer's Manual**
+
+- **Purpose:** How to run, test, deploy, and extend the codebase.
+- **Deliverables:** Setup steps, env vars, scripts, folder structure, API contracts.
+
+**User Manual**
+
+- **Purpose:** How an end user uses ChopChop.
+- **Deliverables:** Upload flow, edit flow, search, share, export, print instructions, screenshots.
+
+**Integration Task**
+
+- **Purpose:** Connect end-to-end: upload → convert → Gemini → validate → store → edit/view/print/export.
+- **Deliverables:** Working happy-path plus error-path handling; smoke tests.
+
+**Final Testing**
+
+- **Purpose:** Verify correctness, usability, and edge cases.
+- **Scope:** Unit tests (adapter/schema), integration tests (ingestion), cross-browser checks (Chrome/Firefox/Safari), mobile responsiveness, print output checks.
+- **Deliverables:** Test plan + results summary.
+
+**Final Presentation**
+
+- **Purpose:** Demo + explain architecture/decisions and show outcomes.
+- **Deliverables:** Slide deck + demo script + "what we built vs plan" summary.
 
 ### Gantt Chart
 
 ![Project Gantt Chart](https://raw.githubusercontent.com/dommcdev/images/refs/heads/main/chopchop/gantt-chart.png)
 
----
-
-<div style="page-break-after: always;"></div>
+\newpage
 
 ## References
 
-- Centre, S. (2020, November 10). _Jumbles: Digital Tools and Historical Recipe Reconstruction_. Sherman Centre for Digital Scholarship. [https://scds.ca/jumbles-digital-tools-historical-recipe-reconstruction/](https://scds.ca/jumbles-digital-tools-historical-recipe-reconstruction/)
-- _Paprika Recipe Manager for iOS, Mac, Android, and Windows_. (n.d.). paprikaapp.com. [https://www.paprikaapp.com/](https://www.paprikaapp.com/)
-- Pressman, R. S., & Maxim, B. R. (2019). _Software engineering: A practitioner’s approach (9th ed.)_. McGraw-Hill Education.
-- Recipe - Schema.org Type. (n.d.). Schema.org. [https://schema.org/Recipe](https://schema.org/Recipe)
-- _Copy Me That_. (2025). Copy Me That. [https://www.copymethat.com/](https://www.copymethat.com/)
-- IBM. (2024, April 18). _What is optical character recognition (OCR)?_ Ibm.com. [https://www.ibm.com/think/topics/optical-character-recognition](https://www.ibm.com/think/topics/optical-character-recognition)
+1. Centre, S. (2020, November 10). _Jumbles: Digital Tools and Historical Recipe Reconstruction_. Sherman Centre for Digital Scholarship. https://scds.ca/jumbles-digital-tools-historical-recipe-reconstruction/
 
----
+2. _Paprika Recipe Manager for iOS, Mac, Android, and Windows_. (n.d.). paprikaapp.com. https://www.paprikaapp.com/
 
-<div style="page-break-after: always;"></div>
+3. Pressman, R. S., & Maxim, B. R. (2019). _Software engineering: A practitioner's approach (9th ed.)_. McGraw-Hill Education.
+
+4. Recipe - Schema.org Type. (n.d.). Schema.org. https://schema.org/Recipe
+
+5. _Copy Me That_. (2025). Copy Me That. https://www.copymethat.com/
+
+6. IBM. (2024, April 18). _What is optical character recognition (OCR)?_ Ibm.com. https://www.ibm.com/think/topics/optical-character-recognition
+
+\newpage
 
 ## Notes
 
 **01/13/26**
+
 Discussed the programming languages that each team member is familiar with and which languages we will be using to develop the website. In class, we talked about the possibility of switching project ideas due to some feasibility issues with our previously-planned Discord/Spotify website project.
 
 Met in the library after class to further discuss project direction. We explored an alternative idea involving a recipe management website where users can upload multiple recipes using PDFs or images.
@@ -440,10 +500,13 @@ Met in the library after class to further discuss project direction. We explored
 In this alternate idea, the Gemini API would process the uploaded files, extract the recipe information, and automatically format it into a clean, organized PDF or website for easy user access. Discussed the main functionalities the platform would include and how users would interact with the system. We ultimately decided to go with this recipe management website for our project.
 
 **01/20/25**
+
 Discussed tasks for the week and assigned some roles/tasks to people, Katie and Kobie worked on the abstract, and it has been decided that Katie will make the tasks list, Adolfo is doing the costs analysis, Dominic is doing the preliminary design, and Shane is doing the overview/background research. We also did a presentation in class.
 
 **01/27/2026**
-We met in the library and further discussed the tasks list / goals for the project. We briefly discussed the creation of a grant chart at some point in the future, not now. Currently we are trying to decide whether or not 1 person should work on 1 task or maybe having more than 1 person working on a single task, for example, 2 people could work on the front end of our website, one person editing the login, another person editing where the user sees the recipes. Discussed layout/creation of the website. Discussed backend creation, especially the usage of gemini
+
+We met in the library and further discussed the tasks list / goals for the project. We briefly discussed the creation of a grant chart at some point in the future, not now. Currently we are trying to decide whether or not 1 person should work on 1 task or maybe having more than 1 person working on a single task, for example, 2 people could work on the front end of our website, one person editing the login, another person editing where the user sees the recipes. Discussed layout/creation of the website. Discussed backend creation, especially the usage of gemini.
 
 **02/03/2026**
+
 We worked on the design doc in class and formatted it to the requirements.
