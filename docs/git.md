@@ -1,40 +1,38 @@
 # Git Workflow
 
-## 1. Sync your local machine
+## 1. Set up feature branch
 
-Before starting anything new, make sure your local main is up to date with the remote main
+Before starting on a new feature, make sure your local main is up to date with the remote main:
 
 ```bash
 git switch main
 git pull origin main
 ```
 
-## 2. Start a new task
-
-Create a local branch and tell our GitHub repo it exists.
+Then, create a local branch and push it up to our Github repo:
 
 ```bash
-git switch -c feature/your-feature-name
-git push -u origin feature/your-feature-name
+git switch -c your-feature-branch
+git push -u origin your-feature-branch
 ```
 
-**Note:** The `-u` only needs to be done once. After that, `git push` and `git pull` will know where to push to/pull from.
+## 2. Work and commit
 
-## 3. Work and commit
-
-Do this often! Small commits are easier to debug.
+Run the following commands periodically as you work on your feature to commit your changes. A commit is like a snapshot of your code.
 
 ```bash
 # Make sure you are on your feature branch (run `git branch` to check)
-git add .
-git commit -m "description of changes"
-git pull --rebase   # Usually optional
-git push            # Send your work to your remote branch on GitHub
+git add .                               # Adds all files to the "staging area" so they can be committed
+git commit -m "description of changes"  # Makes a commit with all the files in the staging area
+git push                                # Send your work to your remote branch on GitHub
 ```
 
-## 4. Stay updated with the team (integrate main branch)
+## 3. Finish and open a PR
 
-If someone else merges code into main, you will (eventually) need to bring those changes into your branch to ensure you code still works with those changes applied.
+Once you are finished with your feature, you just need to:
+
+- Pull any changes from main into your feature branch and ensure your code still works with those changes applied
+- Open a Github pull request (PR) to merge your finished feature branch into the main branch so everyone can use it
 
 ```bash
 # Pull down the latest changes from remote main
@@ -44,20 +42,10 @@ git switch main && git pull
 git switch your-branch
 git rebase main
 
-# Fix any merge conflicts if they appear
-
+# Update your remote branch on Github.
 git push --force-with-lease
+
+# Open a PR
+gh pr create --title "Your PR title" --body "Description of your changes"
+# Or go to github.com and use the "Create PR" button.
 ```
-
-```bash
-# Alternative advanced method (doesn't update local main)
-git switch your-branch && git pull origin main
-```
-
-## 5. Finish and open a PR
-
-Merge your finished feature branch into the main branch so everyone can use/test it.
-
-1. Integrate changes from main one last time.
-2. Ensure your code builds locally!
-3. Go to github.com and open a Pull Request.
