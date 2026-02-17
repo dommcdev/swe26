@@ -19,12 +19,12 @@
 - [ ] DB to JSON converter
 - [ ] Auth
 - [ ] S3 storage bucket
-- [ ] Deploy to Vercel
+- [x] ~~Deploy to Vercel~~
 
 ### Documentation
 
-- [ ] Requirements doc
-- [ ] Design doc
+- [x] ~~Requirements doc~~
+- [x] ~~Design doc~~
 - [ ] Programmer's manual
 - [ ] User manual
 - [ ] Integration task
