@@ -43,7 +43,7 @@ export default function Home() {
       {/* The Results Display */}
       {data && (
         <div
-          style={{ marginTop: "20px", padding: "20px", background: "#f0f0f0" }}
+          style={{ marginTop: "20px", padding: "20px", background: "#000000" }}
         >
           <h2>Result from Gemini:</h2>
           <pre>{JSON.stringify(data, null, 2)}</pre>
