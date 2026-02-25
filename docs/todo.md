@@ -31,3 +31,6 @@
 - [ ] Final testing
 - [ ] Final presentation
 
+### Misc
+- Fallback spinner
+- Logo
