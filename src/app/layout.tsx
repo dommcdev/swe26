@@ -38,12 +38,8 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <nav className="flex items-center justify-between p-4">
-            <div>ChopChop nav</div>
+            <div>ChopChop</div>
             <Suspense fallback={<div className="h-8 w-32" />}>
-              <SignedOut>
-                <SignInButton />
-                <SignUpButton />
-              </SignedOut>
               <SignedIn>
                 <UserButton />
               </SignedIn>
