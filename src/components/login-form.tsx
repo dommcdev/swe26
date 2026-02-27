@@ -109,6 +109,7 @@ export function LoginForm({
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Field>
+              <div id="clerk-captcha" />
               <Field>
                 <Button type="submit" disabled={isSubmitting || !isLoaded}>
                   {isSubmitting ? "Logging in..." : "Login"}

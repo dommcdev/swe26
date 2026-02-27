@@ -182,6 +182,7 @@ export function SignupForm({
                   Must be at least 8 characters long.
                 </FieldDescription>
               </Field>
+              <div id="clerk-captcha" />
               <Field>
                 <Button type="submit" disabled={isSubmitting || !isLoaded}>
                   {isSubmitting ? "Creating..." : "Create Account"}
