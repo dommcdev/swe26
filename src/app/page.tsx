@@ -1,49 +1,50 @@
-"use client"; // Required for interactivity
+"use client";
 
-import { useState } from "react";
-import { analyzeRecipe } from "@/actions/gemini"; // Import your backend function
+import { useState, useTransition } from "react"; // 1. Import useTransition
+import { analyzeRecipe } from "@/actions/gemini";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function Home() {
-  // 1. State to hold the data we get back
-  // We use 'any' for now to keep it simple, but ideally this is your Recipe type
   const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  // 2. Replace manual loading state with startTransition
+  const [isPending, startTransition] = useTransition();
 
-  // 2. The function that runs when you hit "Submit"
   async function handleSubmit(formData: FormData) {
-    setLoading(true); // Turn on "loading" mode
-
-    // Call the Server Action
-    // This goes to the server, runs gemini.ts, and comes back
-    const result = await analyzeRecipe(formData);
-
-    setData(result); // Save the answer
-    setLoading(false); // Turn off "loading"
+    // 3. Wrap the server action call in startTransition
+    startTransition(async () => {
+      const result = await analyzeRecipe(formData);
+      setData(result);
+    });
   }
 
   return (
     <div style={{ padding: "50px", fontFamily: "sans-serif" }}>
-      <h1>Gemini Recipe Tester</h1>
-
-      {/* The Form */}
       <form action={handleSubmit}>
         <input type="file" name="image" accept="image/*" required />
         <br />
         <br />
-        <button type="submit" disabled={loading}>
-          {loading ? "Analyzing..." : "Upload & Analyze"}
-        </button>
+        {/* 4. Use isPending instead of loading */}
+        <Button type="submit" disabled={isPending}>
+          {isPending ? "Analyzing..." : "Upload & Analyze"}
+        </Button>
       </form>
 
-      <div>
-        <Button>Click me</Button>
-      </div>
+      {isPending && (
+        <div style={{ marginTop: "20px", textAlign: "center" }}>
+          <Spinner />
+          <p>Gemini is reading your recipe...</p>
+        </div>
+      )}
 
-      {/* The Results Display */}
-      {data && (
+      {data && !isPending && (
         <div
-          style={{ marginTop: "20px", padding: "20px", background: "#000000" }}
+          style={{
+            marginTop: "20px",
+            padding: "20px",
+            background: "#000000",
+            color: "#fff",
+          }}
         >
           <h2>Result from Gemini:</h2>
           <pre>{JSON.stringify(data, null, 2)}</pre>
