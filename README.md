@@ -1,4 +1,3 @@
-
 # ChopChop
 
 The Digital Cookbook
