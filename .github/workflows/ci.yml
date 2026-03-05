@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache Bun & Next.js
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.bun/install/cache
+            ${{ github.workspace }}/.next/cache
+          # The key changes if your lockfile OR your code changes
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          # If code changes but deps stay the same, still pull the old cache
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lock') }}-
+
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Lint & Format
+        run: |
+          bun run lint
+          bun run format:check
+
+      - name: Run Tests
+        run: bun run test
+
+      - name: Build Project
+        run: bun run build
