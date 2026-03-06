@@ -4,7 +4,7 @@
 
 - [ ] Login page
 - [ ] Home page
-- []  Landing page
+- [] Landing page
 - [ ] File selector
 - [ ] Recipe details editor
 - [ ] Settings page
