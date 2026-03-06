@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSignUp } from "@clerk/nextjs";
+import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,9 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const authImageSrc =
+    "https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJtfWyFWLe0MEF7P4fKIaVj3Yrcl9nCpOLNqo1";
+
   const { signUp, isLoaded, setActive } = useSignUp();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -127,10 +131,12 @@ export function SignupForm({
               </FieldGroup>
             </form>
             <div className="bg-muted relative hidden md:block">
-              <img
-                src="/placeholder.svg"
-                alt="Image"
-                className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+              <Image
+                src={authImageSrc}
+                alt="Prepared food on a table"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover dark:brightness-[0.4]"
               />
             </div>
           </CardContent>
@@ -228,10 +234,12 @@ export function SignupForm({
             </FieldGroup>
           </form>
           <div className="bg-muted relative hidden md:block">
-            <img
-              src="/placeholder.svg"
-              alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+            <Image
+              src={authImageSrc}
+              alt="Prepared food on a table"
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover dark:brightness-[0.4]"
             />
           </div>
         </CardContent>
