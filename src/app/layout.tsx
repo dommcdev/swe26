@@ -1,14 +1,8 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,8 +31,10 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <nav className="flex items-center justify-between p-4">
-            <div>ChopChop</div>
+          <nav className="flex items-center justify-between border-b border-border/60 bg-card/70 p-4 backdrop-blur">
+            <Link href="/" className="font-semibold tracking-tight">
+              ChopChop
+            </Link>
             <Suspense fallback={<div className="h-8 w-32" />}>
               <SignedIn>
                 <UserButton />
