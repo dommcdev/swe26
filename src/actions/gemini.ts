@@ -5,6 +5,8 @@ import { generateObject } from "ai";
 import { z } from "zod";
 
 export async function analyzeRecipe(formData: FormData) {
+  const file = formData.get("image") as File;
+
   const result = await generateObject({
     model: google("gemini-3-flash-preview"),
     schema: z.object({
@@ -18,7 +20,7 @@ export async function analyzeRecipe(formData: FormData) {
           { type: "text", text: "Please parse this recipe." },
           {
             type: "image",
-            image: await (formData.get("image") as File).arrayBuffer(),
+            image: await file.arrayBuffer(),
           },
         ],
       },
