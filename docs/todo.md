@@ -4,6 +4,7 @@
 
 - [ ] Login page
 - [ ] Home page
+- [] Landing page
 - [ ] File selector
 - [ ] Recipe details editor
 - [ ] Settings page
@@ -15,7 +16,7 @@
 
 - [ ] PDF to image converter
 - [ ] Gemini API adapter
-- [ ] Define SQL schemas
+- [x] ~~Define SQL schemas~~
 - [ ] DB to JSON converter
 - [ ] Auth
 - [ ] S3 storage bucket
