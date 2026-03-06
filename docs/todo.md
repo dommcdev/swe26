@@ -4,13 +4,14 @@
 
 - [ ] Login page
 - [ ] Home page
-- [] Landing page
+- [ ] Landing page
 - [ ] File selector
 - [ ] Recipe details editor
 - [ ] Settings page
 - [ ] Recipe viewer
 - [ ] Print to PDF layout
 - [ ] Search
+- [ ] TOS/Privacy Policy
 
 ### Backend
 
@@ -18,8 +19,8 @@
 - [ ] Gemini API adapter
 - [x] ~~Define SQL schemas~~
 - [ ] DB to JSON converter
-- [ ] Auth
-- [ ] S3 storage bucket
+- [x] ~~Auth~~
+- [x] ~~S3 storage bucket~~
 - [x] ~~Deploy to Vercel~~
 
 ### Documentation
@@ -34,7 +35,7 @@
 
 ### Misc
 
-- Fallback spinner
+- More fallback spinners/ui
 - Logo
 
 ### Notes

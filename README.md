@@ -39,6 +39,13 @@ bun dev
 
 The app will be available at [http://localhost:3000](http://localhost:3000)
 
+
+### Troubleshooting
+- Run `bun install`
+- Delete the .next folder (`rm .next`)
+- Make sure .env has everything in .env.example
+
+
 ### Available Commands
 
 | Command               | Description                          |
