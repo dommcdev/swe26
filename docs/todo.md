@@ -35,3 +35,7 @@
 
 - Fallback spinner
 - Logo
+
+
+### Notes
+Does our DB need a users table?

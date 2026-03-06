@@ -1,20 +1,10 @@
 import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 
-// ── Users ───────────────────────────────────────────────────────────────────
-export const users = sqliteTable("users", {
-  id: text("id").primaryKey(), // Clerk user ID (e.g. "user_2abc123")
-  createdAt: text("created_at")
-    .notNull()
-    .default(sql`(current_timestamp)`),
-});
-
 // ── Categories ──────────────────────────────────────────────────────────────
 export const categories = sqliteTable("categories", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id),
+  userId: text("user_id").notNull(), // Logical foreign key to Clerk
   name: text("name").notNull(),
   createdAt: text("created_at")
     .notNull()
@@ -29,9 +19,7 @@ export const recipes = sqliteTable("recipes", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id),
+  userId: text("user_id").notNull(), // Logical foreign key to Clerk
   title: text("title").notNull(),
   description: text("description"),
   servings: integer("servings").notNull().default(1),
