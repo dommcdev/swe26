@@ -18,4 +18,4 @@ node_modules
 .DS_Store
 
 # Don't care about markdown file formatting
-.md
+*.md
