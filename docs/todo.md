@@ -14,8 +14,7 @@
 
 ### Backend
 
-- [ ] PDF to image converter
-- [ ] Gemini API adapter
+- [x] ~~Gemini API~~
 - [x] ~~Define SQL schemas~~
 - [ ] DB to JSON converter
 - [x] ~~Auth~~

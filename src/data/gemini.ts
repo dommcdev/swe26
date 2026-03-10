@@ -2,8 +2,8 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { google } from "@ai-sdk/google";
-import { generateObject } from "ai";
-import { z } from "zod";
+import { generateText, Output } from "ai";
+import { RecipeSchema, FileUploadSchema } from "@/lib/recipe-schema";
 
 export async function analyzeRecipe(formData: FormData) {
   const { userId } = await auth();
@@ -11,40 +11,39 @@ export async function analyzeRecipe(formData: FormData) {
     throw new Error("Unauthorized");
   }
 
-  const file = formData.get("image");
-  if (!(file instanceof File)) {
-    throw new Error("Invalid file upload");
-  }
+  const file = FileUploadSchema.parse(formData.get("image"));
+  const fileData = await file.arrayBuffer();
+  const filePart =
+    file.type === "application/pdf"
+      ? {
+          type: "file" as const,
+          data: fileData,
+          mediaType: file.type,
+        }
+      : {
+          type: "image" as const,
+          image: fileData,
+          mediaType: file.type,
+        };
 
-  const maxBytes = 5 * 1024 * 1024;
-  if (file.size > maxBytes) {
-    throw new Error("File too large (max 5MB)");
-  }
-
-  const allowedMimeTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
-  if (!allowedMimeTypes.has(file.type)) {
-    throw new Error("Unsupported image type");
-  }
-
-  const result = await generateObject({
+  const { output } = await generateText({
     model: google("gemini-3-flash-preview"),
-    schema: z.object({
-      recipeName: z.string(),
-      ingredients: z.array(z.string()),
+    output: Output.object({
+      schema: RecipeSchema,
     }),
     messages: [
       {
         role: "user",
         content: [
-          { type: "text", text: "Please parse this recipe." },
           {
-            type: "image",
-            image: await file.arrayBuffer(),
+            type: "text",
+            text: "Please parse this recipe into structured JSON.",
           },
+          filePart,
         ],
       },
     ],
   });
 
-  return result.object;
+  return output;
 }

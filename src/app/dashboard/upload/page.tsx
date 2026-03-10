@@ -12,6 +12,14 @@ export default function UploadPage() {
   const [isPending, startTransition] = useTransition();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const formatValue = (value: string | number | null | undefined) => {
+    if (value === null || value === undefined || value === "") {
+      return "-";
+    }
+
+    return String(value);
+  };
+
   // This handles both the click and the drop
   const processUpload = (file: File) => {
     // 5MB Limit
@@ -67,13 +75,72 @@ export default function UploadPage() {
         </Button>
 
         {data && !isPending && (
-          <div className="mt-8 p-6 bg-black border border-zinc-700 rounded-xl text-left text-white">
-            <h2 className="text-xl font-bold mb-4">{data.recipeName}</h2>
-            <ul className="list-disc pl-5">
-              {data.ingredients.map((ing: string, i: number) => (
-                <li key={i}>{ing}</li>
-              ))}
-            </ul>
+          <div className="mt-8 space-y-6 rounded-xl border border-zinc-700 bg-black p-6 text-left text-white">
+            <div>
+              <h2 className="text-xl font-bold">{data.recipeTitle}</h2>
+              <p className="mt-2 text-sm text-zinc-300">
+                {formatValue(data.recipeDescription)}
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg border border-zinc-800 p-3">
+                <p className="text-xs uppercase tracking-wide text-zinc-500">
+                  Servings
+                </p>
+                <p className="mt-1 text-sm">{formatValue(data.servings)}</p>
+              </div>
+              <div className="rounded-lg border border-zinc-800 p-3">
+                <p className="text-xs uppercase tracking-wide text-zinc-500">
+                  Prep Time
+                </p>
+                <p className="mt-1 text-sm">{formatValue(data.prepTime)}</p>
+              </div>
+              <div className="rounded-lg border border-zinc-800 p-3">
+                <p className="text-xs uppercase tracking-wide text-zinc-500">
+                  Cook Time
+                </p>
+                <p className="mt-1 text-sm">{formatValue(data.cookTime)}</p>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="mb-3 text-lg font-semibold">Ingredients</h3>
+              <div className="space-y-3">
+                {data.ingredients.map((ingredient, index) => (
+                  <div
+                    key={`${ingredient.name}-${index}`}
+                    className="rounded-lg border border-zinc-800 p-3"
+                  >
+                    <p className="font-medium">{ingredient.name}</p>
+                    <p className="mt-1 text-sm text-zinc-300">
+                      {ingredient.quantity} {ingredient.unit}
+                    </p>
+                    <p className="mt-1 text-xs text-zinc-500">
+                      Raw: {ingredient.originalText}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="mb-3 text-lg font-semibold">Instructions</h3>
+              <ol className="list-decimal space-y-2 pl-5 text-sm text-zinc-200">
+                {data.instructions.map((instruction, index) => (
+                  <li key={`${instruction.slice(0, 20)}-${index}`}>
+                    {instruction}
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div>
+              <h3 className="mb-3 text-lg font-semibold">Raw Response</h3>
+              <pre className="overflow-x-auto rounded-lg border border-zinc-800 bg-zinc-950 p-3 text-xs text-zinc-300">
+                {JSON.stringify(data, null, 2)}
+              </pre>
+            </div>
           </div>
         )}
       </div>
