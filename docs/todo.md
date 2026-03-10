@@ -11,7 +11,6 @@
 - [ ] Recipe viewer
 - [ ] Print to PDF layout
 - [ ] Search
-- [ ] TOS/Privacy Policy
 
 ### Backend
 
@@ -37,6 +36,7 @@
 
 - More fallback spinners/ui
 - Logo
+- TOS/Privacy policy?
 
 ### Notes
 
