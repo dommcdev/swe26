@@ -43,7 +43,7 @@ export default function RootLayout({
                 width={40}
                 height={40}
                 priority
-                className="rounded-md"
+                className="h-10 w-10 rounded-md"
               />
               <span className="text-xl font-bold tracking-tight">ChopChop</span>
             </Link>
