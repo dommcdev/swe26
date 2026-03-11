@@ -2,14 +2,14 @@
 
 ### Frontend
 
-- [ ] Login page
+- [x] ~~Login page~~
 - [ ] Home page
 - [ ] Landing page
 - [ ] File selector
 - [ ] Recipe details editor
 - [ ] Settings page
 - [ ] Recipe viewer
-- [ ] Print to PDF layout
+- [ ] PDF preview/printing page
 - [ ] Search
 
 ### Backend
@@ -35,10 +35,14 @@
 
 - More fallback spinners/ui
 - Logo
+- Finalize auth stuff (remove Apple oath, customize profile page)
+- Server action to take (tweaked) recipe json from client and update db accordingly
 - TOS/Privacy policy?
-- Clerk double login (env vars?)
-- Weird hydration error
 
 ### Notes
 
 Does our DB need a users table?
+
+
+### Bugs
+- Weird hydration error (possibly fixed with clerk update)
