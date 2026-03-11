@@ -36,6 +36,8 @@
 - More fallback spinners/ui
 - Logo
 - TOS/Privacy policy?
+- Clerk double login (env vars?)
+- Weird hydration error
 
 ### Notes
 
