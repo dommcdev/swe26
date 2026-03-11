@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
-import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
+import { ClerkProvider, Show, UserButton } from "@clerk/nextjs";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,11 +27,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en" className="dark">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+    <html lang="en" className="dark">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <ClerkProvider>
           <nav className="flex items-center justify-between border-b border-border/60 bg-card/70 p-4 backdrop-blur">
             <Link
               href="/"
@@ -43,19 +43,22 @@ export default function RootLayout({
                 width={40}
                 height={40}
                 priority
-                className="rounded-md"
+                className="h-10 w-10 rounded-md"
               />
               <span className="text-xl font-bold tracking-tight">ChopChop</span>
             </Link>
             <Suspense>
-              <SignedIn>
+              <Show when="signed-in">
                 <UserButton />
-              </SignedIn>
+              </Show>
             </Suspense>
           </nav>
           {children}
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
+
+//Notes
+//TODO ClerkProvider might need to be wrapped in a suspense boundary

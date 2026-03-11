@@ -4,7 +4,7 @@
     "clerk": {
       "source": "clerk/skills",
       "sourceType": "github",
-      "computedHash": "c572ed569adffe980406a99754c5614a867126f12bb96c66fedf3e7478e10daf"
+      "computedHash": "912205692b6c1db07d6933f0584af27c6582484e5d6fac1c13fec4b6a963a528"
     },
     "clerk-backend-api": {
       "source": "clerk/skills",

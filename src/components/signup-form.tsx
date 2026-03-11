@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSignUp } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,31 +24,62 @@ export function SignupForm({
   const authImageSrc =
     "https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJtfWyFWLe0MEF7P4fKIaVj3Yrcl9nCpOLNqo1";
 
-  const { signUp, isLoaded, setActive } = useSignUp();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { signUp, fetchStatus } = useSignUp();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [pendingVerification, setPendingVerification] = useState(false);
   const [code, setCode] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isLoaded) return;
 
     setIsSubmitting(true);
     setError("");
 
     try {
-      const result = await signUp.create({
+      const redirectUrl = searchParams.get("redirect_url") || "/dashboard";
+      const { error } = await signUp.password({
         emailAddress: email,
         password,
       });
 
-      if (result.status === "complete") {
-        await setActive({ session: result.createdSessionId });
-      } else {
-        setPendingVerification(true);
+      if (error) {
+        setError(error.longMessage || error.message || "An error occurred");
+        return;
+      }
+
+      if (
+        signUp.status === "missing_requirements" &&
+        signUp.unverifiedFields.includes("email_address")
+      ) {
+        const verification = await signUp.verifications.sendEmailCode();
+
+        if (verification.error) {
+          setError(
+            verification.error.longMessage ||
+              verification.error.message ||
+              "Could not send verification code",
+          );
+        }
+        return;
+      }
+
+      if (signUp.status === "complete") {
+        await signUp.finalize({
+          navigate: ({ decorateUrl }) => {
+            const url = decorateUrl(redirectUrl);
+
+            if (url.startsWith("http")) {
+              window.location.href = url;
+              return;
+            }
+
+            router.push(url);
+          },
+        });
       }
     } catch (err: unknown) {
       const error = err as { errors?: Array<{ message: string }> };
@@ -59,18 +91,34 @@ export function SignupForm({
 
   const handleVerification = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isLoaded) return;
 
     setIsSubmitting(true);
     setError("");
 
     try {
-      const result = await signUp.attemptEmailAddressVerification({
+      const redirectUrl = searchParams.get("redirect_url") || "/dashboard";
+      const { error } = await signUp.verifications.verifyEmailCode({
         code,
       });
 
-      if (result.status === "complete") {
-        await setActive({ session: result.createdSessionId });
+      if (error) {
+        setError(error.longMessage || error.message || "Verification failed");
+        return;
+      }
+
+      if (signUp.status === "complete") {
+        await signUp.finalize({
+          navigate: ({ decorateUrl }) => {
+            const url = decorateUrl(redirectUrl);
+
+            if (url.startsWith("http")) {
+              window.location.href = url;
+              return;
+            }
+
+            router.push(url);
+          },
+        });
       }
     } catch (err: unknown) {
       const error = err as { errors?: Array<{ message: string }> };
@@ -81,18 +129,27 @@ export function SignupForm({
   };
 
   const handleOAuth = async (strategy: "oauth_google" | "oauth_apple") => {
-    if (!isLoaded) return;
     try {
-      await signUp.authenticateWithRedirect({
+      const redirectUrl = searchParams.get("redirect_url") || "/dashboard";
+      const { error } = await signUp.sso({
         strategy,
-        redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/",
+        redirectUrl,
+        redirectCallbackUrl: "/sso-callback",
       });
+
+      if (error) {
+        setError(error.longMessage || error.message || "OAuth error");
+      }
     } catch (err: unknown) {
       const error = err as { errors?: Array<{ message: string }> };
       setError(error.errors?.[0]?.message || "OAuth error");
     }
   };
+
+  const pendingVerification =
+    signUp.status === "missing_requirements" &&
+    signUp.unverifiedFields.includes("email_address") &&
+    signUp.missingFields.length === 0;
 
   if (pendingVerification) {
     return (
@@ -124,7 +181,10 @@ export function SignupForm({
                   />
                 </Field>
                 <Field>
-                  <Button type="submit" disabled={isSubmitting || !isLoaded}>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting || fetchStatus === "fetching"}
+                  >
                     {isSubmitting ? "Verifying..." : "Verify Email"}
                   </Button>
                 </Field>
@@ -190,7 +250,10 @@ export function SignupForm({
               </Field>
               <div id="clerk-captcha" />
               <Field>
-                <Button type="submit" disabled={isSubmitting || !isLoaded}>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting || fetchStatus === "fetching"}
+                >
                   {isSubmitting ? "Creating..." : "Create Account"}
                 </Button>
               </Field>
