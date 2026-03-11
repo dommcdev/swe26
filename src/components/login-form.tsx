@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSignIn } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,7 +24,9 @@ export function LoginForm({
   const authImageSrc =
     "https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJtfWyFWLe0MEF7P4fKIaVj3Yrcl9nCpOLNqo1";
 
-  const { signIn, isLoaded, setActive } = useSignIn();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { signIn, fetchStatus } = useSignIn();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -31,19 +34,35 @@ export function LoginForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isLoaded) return;
 
     setIsSubmitting(true);
     setError("");
 
     try {
-      const result = await signIn.create({
+      const redirectUrl = searchParams.get("redirect_url") || "/dashboard";
+      const { error } = await signIn.password({
         identifier: email,
         password,
       });
 
-      if (result.status === "complete") {
-        await setActive({ session: result.createdSessionId });
+      if (error) {
+        setError(error.longMessage || error.message || "An error occurred");
+        return;
+      }
+
+      if (signIn.status === "complete") {
+        await signIn.finalize({
+          navigate: ({ decorateUrl }) => {
+            const url = decorateUrl(redirectUrl);
+
+            if (url.startsWith("http")) {
+              window.location.href = url;
+              return;
+            }
+
+            router.push(url);
+          },
+        });
       } else {
         setError("Sign in incomplete. Please try again.");
       }
@@ -56,13 +75,17 @@ export function LoginForm({
   };
 
   const handleOAuth = async (strategy: "oauth_google" | "oauth_apple") => {
-    if (!isLoaded) return;
     try {
-      await signIn.authenticateWithRedirect({
+      const redirectUrl = searchParams.get("redirect_url") || "/dashboard";
+      const { error } = await signIn.sso({
         strategy,
-        redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/",
+        redirectUrl,
+        redirectCallbackUrl: "/sso-callback",
       });
+
+      if (error) {
+        setError(error.longMessage || error.message || "OAuth error");
+      }
     } catch (err: unknown) {
       const error = err as { errors?: Array<{ message: string }> };
       setError(error.errors?.[0]?.message || "OAuth error");
@@ -115,7 +138,10 @@ export function LoginForm({
               </Field>
               <div id="clerk-captcha" />
               <Field>
-                <Button type="submit" disabled={isSubmitting || !isLoaded}>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting || fetchStatus === "fetching"}
+                >
                   {isSubmitting ? "Logging in..." : "Login"}
                 </Button>
               </Field>
