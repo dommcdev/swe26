@@ -3,13 +3,13 @@
 ### Frontend
 
 - [x] ~~Login page~~
-- [ ] Home page
+- [ ] Home page (Dominic)
+- [ ] Search (Shane)
+- [ ] Recipe viewer (Kobie)
+- [ ] Recipe editor (Adolfo)
+- [ ] PDF preview/printing page (Katie)
 - [ ] Landing page
-- [ ] Recipe details editor
 - [ ] Settings page
-- [ ] Recipe viewer
-- [ ] PDF preview/printing page
-- [ ] Search
 
 ### Backend
 
@@ -34,15 +34,15 @@
 
 - More fallback spinners/ui
 - Logo
-- Finalize auth stuff (remove Apple oath, customize profile page)
+- Finalize auth stuff (follow docs, no Apple oath, customize profile component)
 - Server action to take (tweaked) recipe json from client and update db accordingly
 - TOS/Privacy policy?
 - Native image selector popup should be in "all files" mode, not just "images" mode
+- Add image upload to recipe editor
 
 ### Notes
-
-Does our DB need a users table?
-
+- Does our DB need a users table?
+- Search should be a "go to recipe" fuzzy-finder with a few symbols for advanced search (hinted at in the ui), e.g. # for category, @ for ingredient, etc). We should probably use cmdk (for ui) and fuse.js (for simple fuzzy searching). Since our recipe data is so small we can get by with sending everything to the client on first page load, and as a result we can fuzzy-search everything blazingly fast.
 
 ### Bugs
 - Weird hydration error (possibly fixed with clerk update)
