@@ -21,6 +21,7 @@
     "@ai-sdk/google": "^3.0.21",
     "@base-ui/react": "^1.2.0",
     "@clerk/nextjs": "7",
+    "@clerk/ui": "^1.2.1",
     "@libsql/client": "^0.17.0",
     "@phosphor-icons/react": "^2.1.10",
     "@uploadthing/react": "^7.3.3",
