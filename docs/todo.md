@@ -5,7 +5,6 @@
 - [x] ~~Login page~~
 - [ ] Home page
 - [ ] Landing page
-- [ ] File selector
 - [ ] Recipe details editor
 - [ ] Settings page
 - [ ] Recipe viewer
@@ -38,6 +37,7 @@
 - Finalize auth stuff (remove Apple oath, customize profile page)
 - Server action to take (tweaked) recipe json from client and update db accordingly
 - TOS/Privacy policy?
+- Native image selector popup should be in "all files" mode, not just "images" mode
 
 ### Notes
 
