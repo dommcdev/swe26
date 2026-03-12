@@ -8,7 +8,7 @@
 - [ ] Recipe viewer (Kobie)
 - [ ] Recipe editor (Adolfo)
 - [ ] PDF preview/printing page (Katie)
-- [ ] Landing page
+- [x] Landing page
 - [ ] Settings page
 
 ### Backend
@@ -38,7 +38,7 @@
 - Server action to take (tweaked) recipe json from client and update db accordingly
 - TOS/Privacy policy?
 - Native image selector popup should be in "all files" mode, not just "images" mode
-- Add image upload to recipe editor
+- Add image upload to recipe editor (also need to adjust recipe/db schema)
 
 ### Notes
 - Does our DB need a users table?
