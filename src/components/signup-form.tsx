@@ -22,7 +22,7 @@ export function SignupForm({
   ...props
 }: React.ComponentProps<"div">) {
   const authImageSrc =
-    "https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJtfWyFWLe0MEF7P4fKIaVj3Yrcl9nCpOLNqo1";
+    "https://i3ae2rmmav.ufs.sh/f/jtfWTQ42KQLJp6R8xme14MkAviEcgdIYupqoh2XDK6yTmbaw";
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -196,7 +196,7 @@ export function SignupForm({
                 alt="Prepared food on a table"
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover dark:brightness-[0.4]"
+                className="object-cover dark:brightness-[0.7]"
               />
             </div>
           </CardContent>
@@ -302,7 +302,7 @@ export function SignupForm({
               alt="Prepared food on a table"
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover dark:brightness-[0.4]"
+              className="object-cover dark:brightness-[0.7]"
             />
           </div>
         </CardContent>
