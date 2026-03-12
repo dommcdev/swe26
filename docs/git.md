@@ -27,6 +27,12 @@ git commit -m "description of changes"  # Makes a commit with all the files in t
 git push                                # Send your work to your remote branch on GitHub
 ```
 
+Also, optionally...
+```bash
+bun run format    # Format your code
+bun run lint      # Check for non-syntax errors
+```
+
 ## 3. Finish and open a PR
 
 Once you are finished with your feature, you just need to:
