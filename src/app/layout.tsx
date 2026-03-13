@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider, Show, UserButton } from "@clerk/nextjs";
+import { HomeDashboardButton } from "@/app/_components/home-dashboard-button";
 import { shadcn } from "@clerk/ui/themes";
 import "./globals.css";
 
@@ -33,7 +34,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ClerkProvider appearance={{ theme: shadcn }}>
-          <nav className="flex items-center justify-between border-b border-border/60 bg-card/70 p-4 backdrop-blur">
+          <nav className="flex items-center justify-between border-b border-border/60 bg-card/70 p-2 backdrop-blur">
             <Link
               href="/"
               className="flex items-center font-semibold tracking-tight"
@@ -46,8 +47,8 @@ export default function RootLayout({
                 priority
                 className="h-10 w-10 rounded-md"
               />
-              <span className="text-xl font-bold tracking-tight">ChopChop</span>
             </Link>
+            <HomeDashboardButton />
             <Suspense>
               <Show when="signed-in">
                 <UserButton />
