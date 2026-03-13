@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "@clerk/ui/themes/shadcn.css";
 
 @import "uploadthing/tw/v4";
 @source "../../node_modules/@uploadthing/react/dist/";
@@ -8,6 +9,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --clerk-border-radius: 0rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -43,6 +45,7 @@
 }
 
 .dark {
+  --clerk-border-radius: 0rem;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
