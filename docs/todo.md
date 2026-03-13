@@ -34,7 +34,6 @@
 
 - More fallback spinners/ui
 - Logo
-- Finalize auth stuff (follow docs, no Apple oath, customize profile component)
 - Server action to take (tweaked) recipe json from client and update db accordingly
 - TOS/Privacy policy?
 - Native image selector popup should be in "all files" mode, not just "images" mode
