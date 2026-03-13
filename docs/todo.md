@@ -8,8 +8,9 @@
 - [ ] Recipe viewer (Kobie)
 - [ ] Recipe editor (Adolfo)
 - [ ] PDF preview/printing page (Katie)
-- [x] Landing page
+- [x] ~~Landing page~~
 - [ ] Settings page
+- [ ] Fullscreen categories/recipes page
 
 ### Backend
 
