@@ -45,6 +45,7 @@
 - Does our DB need a users table?
 - Print page should include QR code linking back to original
 - Search should be a "go to recipe" fuzzy-finder with a few symbols for advanced search (hinted at in the ui), e.g. # for category, @ for ingredient, etc). We should probably use cmdk (for ui) and fuse.js (for simple fuzzy searching). Since our recipe data is so small we can get by with sending everything to the client on first page load, and as a result we can fuzzy-search everything blazingly fast.
+- Add rest of env vars (incl turso db) to github actions env
 
 ### Bugs
 - Weird hydration error (possibly fixed with clerk update)
