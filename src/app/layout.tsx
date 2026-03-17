@@ -3,15 +3,17 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Navbar } from "@/app/_components/navbar";
 import { shadcn } from "@clerk/ui/themes";
+import { ThemeProvider } from "@/components/theme-provider";
+import { cn } from "@/lib/utils";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const fontSans = Geist({
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const fontMono = Geist_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
@@ -26,14 +28,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ClerkProvider appearance={{ theme: shadcn }}>
-          <Navbar />
-          {children}
-        </ClerkProvider>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(
+        "antialiased font-sans",
+        fontSans.variable,
+        fontMono.variable,
+      )}
+    >
+      <body>
+        <ThemeProvider>
+          <ClerkProvider appearance={{ theme: shadcn }}>
+            <Navbar />
+            {children}
+          </ClerkProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

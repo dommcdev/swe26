@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Show, UserButton } from "@clerk/nextjs";
 import { HomeDashboardButton } from "@/app/_components/home-dashboard-button";
+import { ThemeToggleButton } from "@/app/_components/theme-toggle-button";
 import logo from "@/app/icon.svg";
 
 export function Navbar() {
@@ -22,6 +23,7 @@ export function Navbar() {
         </span>
       </Link>
       <div className="flex items-center gap-4 sm:gap-6">
+        <ThemeToggleButton />
         <HomeDashboardButton />
         <Suspense>
           <Show when="signed-in">
