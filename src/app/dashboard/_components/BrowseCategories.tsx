@@ -18,13 +18,10 @@ export default async function BrowseCategories() {
     .where(eq(categories.userId, userId));
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="m-4 flex flex-col gap-2 md:m-6">
       <div className="flex flex-row justify-between items-center">
         <h2 className="text-xl font-bold">Browse Categories</h2>
-        <Link
-          href="/dashboard/categories"
-          className="text-blue-500 hover:underline"
-        >
+        <Link href="/dashboard/categories" className="underline">
           View all categories
         </Link>
       </div>

@@ -7,7 +7,7 @@ import { ThemeToggleButton } from "@/app/_components/theme-toggle-button";
 
 export function Navbar() {
   return (
-    <nav className="flex items-center justify-between border-b-[3px] border-foreground bg-background px-4 py-3 sm:px-6 lg:px-8 relative z-50">
+    <nav className="border-b-[3px] border-foreground relative z-50 flex items-center justify-between bg-background px-4 py-3 dark:bg-[oklch(0.18_0_0)] sm:px-6 lg:px-8">
       <Link href="/" className="flex items-center gap-3 group">
         <Image
           src="/logo.svg"
@@ -15,7 +15,7 @@ export function Navbar() {
           width={40}
           height={40}
           priority
-          className="h-10 w-25 bg-background"
+          className="h-10 w-25 bg-background dark:bg-[oklch(0.18_0_0)]"
         />
         <span className="text-2xl font-black uppercase tracking-tighter text-foreground drop-shadow-[2px_2px_0px_var(--primary)] hidden sm:block mt-1"></span>
       </Link>
