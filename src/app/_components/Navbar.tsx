@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Show, UserButton } from "@clerk/nextjs";
-import { HomeDashboardButton } from "@/app/_components/home-dashboard-button";
-import { ThemeToggleButton } from "@/app/_components/theme-toggle-button";
+import { HomeDashboardButton } from "@/app/_components/HomeDashboardButton";
+import { ThemeToggleButton } from "@/app/_components/ThemeToggleButton";
 
 export function Navbar() {
   return (
@@ -12,10 +12,10 @@ export function Navbar() {
         <Image
           src="/logo.svg"
           alt="ChopChop Logo"
-          width={40}
-          height={40}
+          width={840}
+          height={329}
           priority
-          className="h-10 w-25 bg-background dark:bg-[oklch(0.18_0_0)]"
+          className="h-8 w-auto bg-background dark:bg-[oklch(0.18_0_0)]"
         />
         <span className="text-2xl font-black uppercase tracking-tighter text-foreground drop-shadow-[2px_2px_0px_var(--primary)] hidden sm:block mt-1"></span>
       </Link>

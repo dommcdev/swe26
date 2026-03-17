@@ -24,7 +24,7 @@ export default function HomePage() {
                 ChopChop
               </h1>
 
-              <div className="inline-block border-[3px] border-foreground px-6 py-3 bg-primary text-primary-foreground font-black uppercase tracking-widest text-lg sm:text-xl md:text-3xl shadow-[6px_6px_0px_0px_var(--foreground)] -rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="inline-flex items-center border-[3px] border-foreground px-6 py-3 bg-primary text-primary-foreground font-black uppercase tracking-widest text-lg leading-none sm:text-xl md:text-3xl shadow-[6px_6px_0px_0px_var(--foreground)] -rotate-1 transform-gpu [backface-visibility:hidden] [will-change:transform] hover:rotate-0 transition-transform duration-300">
                 The Digital Cookbook
               </div>
             </div>
