@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   cacheComponents: true,
   allowedDevOrigins: ["*.tetra-salmon.ts.net"],
-  serverExternalPackages: ["@libsql/client"],
   images: {
     remotePatterns: [
       {
