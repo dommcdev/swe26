@@ -8,7 +8,7 @@ async function main() {
   console.log("Seed started...");
 
   // 1. Create Categories
-  const [breakfast, dinner] = await db
+  const [breakfast] = await db
     .insert(categories)
     .values([
       { name: "Breakfast", userId: USER_ID },

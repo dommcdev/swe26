@@ -1,4 +1,4 @@
-import { DashNavbar } from "@/app/dashboard/_components/DashNavbar";
+import { Navbar } from "@/app/(landing)/_components/Navbar";
 
 export default function LandingLayout({
   children,
@@ -7,7 +7,7 @@ export default function LandingLayout({
 }) {
   return (
     <div>
-      <DashNavbar />
+      <Navbar />
       <main>{children}</main>
     </div>
   );

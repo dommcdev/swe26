@@ -5,7 +5,6 @@ import { Command } from "cmdk";
 import Fuse from "fuse.js";
 import { MagnifyingGlass, Hash, At } from "@phosphor-icons/react";
 import { RecipeWithDetails } from "@/data/recipes";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface SearchClientProps {
@@ -79,7 +78,7 @@ export default function SearchClient({ recipes }: SearchClientProps) {
   }, [searchQuery, fuse, recipes]);
 
   const handleSelect = (recipeId: string) => {
-    router.push(`/dashboard/recipe/${recipeId}`);
+    router.push(`/dashboard/recipes/${recipeId}`);
   };
 
   // Handle keyboard shortcut for opening search (cmd+k or ctrl+k)
