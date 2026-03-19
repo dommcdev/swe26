@@ -1,5 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
-import { getAllUserRecipes } from "@/data/recipes";
+import { getAllUserRecipes } from "@/data/fetchRecipes";
 import SearchClient from "./_components/SearchClient";
 
 export default async function SearchPage() {

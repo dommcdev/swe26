@@ -4,7 +4,6 @@ import { relations, sql } from "drizzle-orm";
 // ── Categories ──────────────────────────────────────────────────────────────
 export const categories = sqliteTable("categories", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  publicId: text("public_id").notNull().unique(), // Public identifier for URLs
   slug: text("slug").notNull(),
   userId: text("user_id").notNull(), // Logical foreign key to Clerk
   name: text("name").notNull(),
