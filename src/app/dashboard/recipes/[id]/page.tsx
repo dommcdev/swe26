@@ -107,16 +107,16 @@ export default async function RecipePage({
               <span className="font-bold">Servings:</span>
               <span>{recipe.servings}</span>
             </div>
-            {recipe.prepTimeMin && (
+            {recipe.prepTime && (
               <div className="flex items-center gap-1">
                 <span className="font-bold">Prep:</span>
-                <span>{recipe.prepTimeMin} min</span>
+                <span>{recipe.prepTime} min</span>
               </div>
             )}
-            {recipe.cookTimeMin && (
+            {recipe.cookTime && (
               <div className="flex items-center gap-1">
                 <span className="font-bold">Cook:</span>
-                <span>{recipe.cookTimeMin} min</span>
+                <span>{recipe.cookTime} min</span>
               </div>
             )}
           </div>

@@ -1,17 +1,17 @@
 "use server";
 
 import { db } from "@/db";
-import { recipes, ingredients, categories } from "@/db/schema";
+import { recipes } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
 
 export type RecipeWithDetails = {
-  id: string;
-  title: string;
+  id: number;
+  name: string;
   description: string | null;
   servings: number;
-  prepTimeMin: number | null;
-  cookTimeMin: number | null;
+  prepTime: number | null;
+  cookTime: number | null;
   categoryId: number | null;
   categoryName: string | null;
   ingredients: Array<{
