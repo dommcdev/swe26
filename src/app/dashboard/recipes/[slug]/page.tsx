@@ -9,7 +9,7 @@ import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 export default async function RecipePage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: number }>;
 }) {
   const { userId } = await auth();
   const { id } = await params;
@@ -43,13 +43,13 @@ export default async function RecipePage({
   const recipeIngredients = await db
     .select()
     .from(ingredients)
-    .where(eq(ingredients.recipeId, id));
+    .where(eq(ingredients.id, id));
 
   // Fetch instructions
   const recipeInstructions = await db
     .select()
     .from(instructions)
-    .where(eq(instructions.recipeId, id))
+    .where(eq(instructions.id, id))
     .orderBy(instructions.stepNumber);
 
   // Fetch category if exists
@@ -87,7 +87,7 @@ export default async function RecipePage({
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
               <h1 className="text-3xl font-black tracking-tighter mb-2">
-                {recipe.title}
+                {recipe.name}
               </h1>
               {recipe.description && (
                 <p className="text-sm text-muted-foreground">
