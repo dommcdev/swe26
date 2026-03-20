@@ -27,6 +27,8 @@ export const recipes = sqliteTable("recipes", {
   prepTime: integer("prep_time"),
   cookTime: integer("cook_time"),
   categoryId: integer("category_id").references(() => categories.id),
+  imageUrl: text("image_url"),
+  imageKey: text("image_key"),
   createdAt: text("created_at")
     .notNull()
     .default(sql`(current_timestamp)`),
